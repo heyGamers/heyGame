@@ -87,10 +87,10 @@ export class LearnWords implements BaseLevel {
             this.wordProgress++;
             this.engine.progressText = this.word.substring(0, this.wordProgress);
             if (this.engine.progressText == this.word) {
-                this.engine.playWord(this.word);
                 this.currentWord++;
                 this.engine.grow();
                 this.spawnWord();
+                this.engine.playWord(this.word);
             }
         } else {
             this.engine.die();
