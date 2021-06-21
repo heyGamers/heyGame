@@ -1,18 +1,26 @@
 import { GameObject } from "./gameObject.js";
 export class Brick extends GameObject {
-    constructor(row, column, breakstatus = 2, color = "blue", itemtype = "default", item, hidden = false) {
+    constructor(item) {
         super();
-        this.spawn();
+        this.item = item;
+        this.spawn(item);
     }
     update() {
+        super.update();
     }
-    spawn() {
+    spawn(item) {
+        console.log("brick spawn");
+        this.element = document.createElement("brick");
+        let brickgrid = document.querySelector("brickgrid");
+        brickgrid.appendChild(this.element);
+        this.element.innerHTML = item;
     }
     reset() {
     }
     hit() {
     }
     break() {
+        this.element.remove();
     }
     checkItem() {
     }
