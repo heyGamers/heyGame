@@ -278,7 +278,6 @@ export class SnakeEngine {
     }
     start() {
         document.getElementById('deathMenu').style.display = 'none';
-        this.resize();
         this.clearDivs();
         this.render();
         this.algo.start();
