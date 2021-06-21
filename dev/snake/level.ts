@@ -26,7 +26,7 @@ export class RandomLetters implements BaseLevel {
 
 export class LearnLetters implements BaseLevel {
     public engine: SnakeEngine;
-    private letters = 'BOMRS';
+    protected letters = 'BOMRS';
     private currentLetter = 0;
     private currentProgress = 0;
 
@@ -64,7 +64,7 @@ export class LearnLetters implements BaseLevel {
 
 export class LearnWords implements BaseLevel {
     public engine: SnakeEngine;
-    private words = ['roos','boon','boos','luchtvaartmaatschappij','roos'];
+    protected words = ['roos','boon','boos','boom','roos'];
     private currentWord = 0;
     private wordProgress = 0;
 
@@ -91,6 +91,11 @@ export class LearnWords implements BaseLevel {
                 this.engine.grow();
                 this.spawnWord();
                 this.engine.playWord(this.word);
+                if (this.currentWord >= this.words.length) {
+                    this.engine.level = new LearnLetters();
+                    this.engine.level.start();
+                    return;
+                }
             }
         } else {
             this.engine.die();

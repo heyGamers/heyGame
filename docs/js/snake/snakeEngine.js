@@ -9,7 +9,7 @@ export class SnakeEngine {
         this.snakePos = [];
         this.snakeTarget = [];
         this.snakeDir = new Vector(1, 0);
-        this.moveTime = 0.5;
+        this.moveTime = 0.8;
         this.moveTimer = 0;
         this.visualOffset = 0;
         this.inputType = 'swipe';

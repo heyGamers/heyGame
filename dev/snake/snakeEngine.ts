@@ -12,7 +12,7 @@ export class SnakeEngine {
     private snakePos: Vector[] = [];
     private snakeTarget: Vector[] = [];
     private snakeDir: Vector = new Vector(1, 0);
-    private moveTime = 0.5;
+    private moveTime = 0.8;
     private moveTimer = 0;
     private visualOffset = 0;
     private inputType = 'swipe';

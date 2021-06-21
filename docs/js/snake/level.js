@@ -48,7 +48,7 @@ export class LearnLetters {
 }
 export class LearnWords {
     constructor() {
-        this.words = ['roos', 'boon', 'boos', 'luchtvaartmaatschappij', 'roos'];
+        this.words = ['roos', 'boon', 'boos', 'boom', 'roos'];
         this.currentWord = 0;
         this.wordProgress = 0;
     }
@@ -69,10 +69,15 @@ export class LearnWords {
             this.wordProgress++;
             this.engine.progressText = this.word.substring(0, this.wordProgress);
             if (this.engine.progressText == this.word) {
-                this.engine.playWord(this.word);
                 this.currentWord++;
                 this.engine.grow();
                 this.spawnWord();
+                this.engine.playWord(this.word);
+                if (this.currentWord >= this.words.length) {
+                    this.engine.level = new LearnLetters();
+                    this.engine.level.start();
+                    return;
+                }
             }
         }
         else {
