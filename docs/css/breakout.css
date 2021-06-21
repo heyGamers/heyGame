@@ -63,3 +63,9 @@ brick {
 
     background-image: url('../assets/img/breakout/brickPurple.png');
 }
+
+.dead {
+    background-color: #00000000;
+
+    background-image: url('');
+}
