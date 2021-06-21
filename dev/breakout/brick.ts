@@ -9,7 +9,7 @@ export class Brick extends GameObject{
     private itemtype : string
     private item : string
     private color : string
-    private breakstatus : number
+    public breakstatus : boolean = false
     private hidden : boolean
     private fallingItem : FallingItem
 
@@ -53,7 +53,9 @@ export class Brick extends GameObject{
     }
 
     public break() : void {
-        this.element.remove()
+        this.element.classList.add("dead")
+        this.element.innerHTML = ""
+        this.breakstatus = true
     }
 
     // global functions

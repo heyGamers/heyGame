@@ -50,7 +50,7 @@ export class Level {
     private init(level : number) { 
         this.paddle = new Paddle(this.gameInstance);
         this.ball = new Ball(this.gameInstance);
-        this.brickGrid = new BrickGrid(5);
+        this.brickGrid = new BrickGrid(25);
 
         // todo: switchcase levelinit 1 2 3 
     }
@@ -91,10 +91,9 @@ export class Level {
     public checkBrickCollision() {
         
         for (let i = 0; i < this.brickGrid.brickAmount; i++) {
-            
             let hit = this.gameInstance.checkCollision(this.ball.getRectancle(), this.brickGrid.bricks[i].getRectancle())
 
-            if (hit) {
+            if (hit && !this.brickGrid.bricks[i].breakstatus) {
                 console.log("brick collision", i)
                 this.ball.bounceY();
                 this.brickGrid.bricks[i].break();

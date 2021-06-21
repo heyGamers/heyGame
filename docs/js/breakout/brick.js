@@ -2,6 +2,7 @@ import { GameObject } from "./gameObject.js";
 export class Brick extends GameObject {
     constructor(item) {
         super();
+        this.breakstatus = false;
         this.item = item;
         this.spawn(item);
     }
@@ -20,7 +21,9 @@ export class Brick extends GameObject {
     hit() {
     }
     break() {
-        this.element.remove();
+        this.element.classList.add("dead");
+        this.element.innerHTML = "";
+        this.breakstatus = true;
     }
     checkItem() {
     }
