@@ -1,5 +1,4 @@
 # heyGame
-edit to update pages
 
 ## Changelog
 
