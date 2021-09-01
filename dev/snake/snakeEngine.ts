@@ -12,7 +12,7 @@ export class SnakeEngine {
     private snakePos: Vector[] = [];
     private snakeTarget: Vector[] = [];
     private snakeDir: Vector = new Vector(1, 0);
-    private moveTime = 0.5;
+    private moveTime = 0.8;
     private moveTimer = 0;
     private visualOffset = 0;
     private inputType = 'swipe';
@@ -39,14 +39,6 @@ export class SnakeEngine {
 
         document.getElementById('restartButton').addEventListener('click', () => { this.start() })
 
-        let screen = gameDiv.getBoundingClientRect();
-
-        let mult = Math.min(screen.width / 180,
-            screen.height / 120);
-        this.resMult = mult;
-
-        this.initBackground();
-
         this.touch.initListeners();
         this.touch.resMult = this.resMult;
 
@@ -56,6 +48,38 @@ export class SnakeEngine {
     public pause() {
         this.paused = true;
         this.gameDiv.style.opacity = '0.25';
+    }
+
+    public resize() {
+        let container = document.getElementById('fullContainer');
+        let w = window.innerWidth * 0.7;
+        let h = window.innerHeight * 0.8;
+        let rows = 10;
+        let colums = 15;
+
+        let centerH = 80;
+        let centerW = 70;
+
+        let ratio = (w / 4) / (h / 3);
+        console.log(ratio);
+        if (ratio > 1) {
+            let diff = (ratio - 1) * centerW;
+            centerW -= diff;
+            colums += diff / 2;
+        } else {
+            let diff = (1 - ratio) * centerH;
+            centerH -= diff;
+            rows += diff / 2;
+        }
+        console.log(rows)
+
+        container.style.gridTemplateColumns = `${colums}vw ${centerW}vw ${colums}vw`;
+        container.style.gridTemplateRows = `${rows}vh ${centerH}vh ${rows}vh`;
+        
+        let screen = this.gameDiv.getBoundingClientRect();
+        let mult = Math.min(screen.width / 180,screen.height / 120);
+        this.resMult = mult;
+        this.touch.resMult = this.resMult;
     }
 
     public unPause() {
@@ -96,15 +120,6 @@ export class SnakeEngine {
         for (let c of this.snakeDivs) {
             c.update();
         }
-    }
-
-    private initBackground() {
-        let bg = new GameComponent('background');
-        let bgSize = this.size.multiply(this.segmentSize * this.resMult);
-        bg.size = bgSize;
-        bg.engine = this;
-        bg.updateDiv();
-        this.gameDiv.appendChild(bg.div);
     }
 
     movePos(touchPos: Vector) {
@@ -314,6 +329,7 @@ export class SnakeEngine {
 
     public start() {
         document.getElementById('deathMenu').style.display = 'none';
+        // this.resize();
         this.clearDivs();
         this.render();
         this.algo.start();

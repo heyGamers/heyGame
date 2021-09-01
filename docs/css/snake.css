@@ -10,6 +10,10 @@ background {
     height: 100vh;
 }
 
+.item-main {
+    display: flex;
+}
+
 snakeSegment {
     background-color: var(--primary-color);
     border: 4px solid var(--primary-color-dark);
@@ -25,7 +29,6 @@ body {
 
 game {
     z-index: -30;
-    background-color: var(--primary-color);
 }
 
 .gameComp {

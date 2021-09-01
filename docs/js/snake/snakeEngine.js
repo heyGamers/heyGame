@@ -1,4 +1,3 @@
-import { GameComponent } from "./components/gameComponent.js";
 import { Letter } from "./components/letter.js";
 import { Segment } from "./components/segment.js";
 import { Vector } from "./math/vector.js";
@@ -10,7 +9,7 @@ export class SnakeEngine {
         this.snakePos = [];
         this.snakeTarget = [];
         this.snakeDir = new Vector(1, 0);
-        this.moveTime = 0.5;
+        this.moveTime = 0.8;
         this.moveTimer = 0;
         this.visualOffset = 0;
         this.inputType = 'swipe';
@@ -29,10 +28,6 @@ export class SnakeEngine {
         this.audio = new SoundManager();
         this.inputType = inputType;
         document.getElementById('restartButton').addEventListener('click', () => { this.start(); });
-        let screen = gameDiv.getBoundingClientRect();
-        let mult = Math.min(screen.width / 180, screen.height / 120);
-        this.resMult = mult;
-        this.initBackground();
         this.touch.initListeners();
         this.touch.resMult = this.resMult;
         console.log('game constructed!');
@@ -40,6 +35,34 @@ export class SnakeEngine {
     pause() {
         this.paused = true;
         this.gameDiv.style.opacity = '0.25';
+    }
+    resize() {
+        let container = document.getElementById('fullContainer');
+        let w = window.innerWidth * 0.7;
+        let h = window.innerHeight * 0.8;
+        let rows = 10;
+        let colums = 15;
+        let centerH = 80;
+        let centerW = 70;
+        let ratio = (w / 4) / (h / 3);
+        console.log(ratio);
+        if (ratio > 1) {
+            let diff = (ratio - 1) * centerW;
+            centerW -= diff;
+            colums += diff / 2;
+        }
+        else {
+            let diff = (1 - ratio) * centerH;
+            centerH -= diff;
+            rows += diff / 2;
+        }
+        console.log(rows);
+        container.style.gridTemplateColumns = `${colums}vw ${centerW}vw ${colums}vw`;
+        container.style.gridTemplateRows = `${rows}vh ${centerH}vh ${rows}vh`;
+        let screen = this.gameDiv.getBoundingClientRect();
+        let mult = Math.min(screen.width / 180, screen.height / 120);
+        this.resMult = mult;
+        this.touch.resMult = this.resMult;
     }
     unPause() {
         this.paused = false;
@@ -74,14 +97,6 @@ export class SnakeEngine {
         for (let c of this.snakeDivs) {
             c.update();
         }
-    }
-    initBackground() {
-        let bg = new GameComponent('background');
-        let bgSize = this.size.multiply(this.segmentSize * this.resMult);
-        bg.size = bgSize;
-        bg.engine = this;
-        bg.updateDiv();
-        this.gameDiv.appendChild(bg.div);
     }
     movePos(touchPos) {
         let divRect = this.gameDiv.getBoundingClientRect();
